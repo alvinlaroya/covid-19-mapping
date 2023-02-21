@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "covid-19-mapping",
+    "slug": "covid-19-mapping",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.wazaskiller.covid"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.wazaskiller.covid",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBi6PUt5EYMfarWhy9OYqSya3x9AkfVgRI"
+        }
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5837d656-4dcc-484f-b760-5827b84f35c0"
+      }
+    },
+    "owner": "wazaskiller"
+  }
+}
