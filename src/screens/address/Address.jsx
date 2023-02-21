@@ -9,7 +9,7 @@ import { Appbar, IconButton } from "react-native-paper";
 
 // components
 import AuthButton from "../../components/button/AuthButton";
-import CaseHistoryTable from "../../components/table/CaseHistoryTable";
+import AddressesTable from "../../components/table/AddressesTable";
 
 const Case = () => {
   const navigation = useNavigation();
@@ -34,7 +34,7 @@ const Case = () => {
         <AuthButton />
       </Appbar.Header>
       <ScrollView style={styles.section}>
-        <CaseHistoryTable />
+        <AddressesTable />
       </ScrollView>
     </View>
   );

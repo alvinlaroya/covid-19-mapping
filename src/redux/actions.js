@@ -3,6 +3,7 @@ export const SET_RECENT_CASES = "SET_RECENT_CASES";
 export const SET_COUNT_CASES = "SET_COUNT_CASES";
 export const SET_CURRENT_CASE = "SET_CURRENT_CASE";
 export const SET_ADDRESSES = "SET_ADDRESSES";
+export const SET_CURRENT_CASE_HISTORY = "SET_CURRENT_CASE_HISTORY";
 
 export const setUserSession = (user) => dispatch => {
     dispatch({
@@ -35,6 +36,13 @@ export const setCurrentCase = (data) => dispatch => {
 export const setAddresses = (data) => dispatch => {
     dispatch({
         type: SET_ADDRESSES,
+        payload: data
+    })
+}
+
+export const setCurrentCaseHistory = (data) => dispatch => {
+    dispatch({
+        type: SET_CURRENT_CASE_HISTORY,
         payload: data
     })
 }

@@ -3,7 +3,8 @@ import {
     SET_RECENT_CASES,
     SET_COUNT_CASES,
     SET_CURRENT_CASE,
-    SET_ADDRESSES
+    SET_ADDRESSES,
+    SET_CURRENT_CASE_HISTORY
 } from "./actions";
 
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
     recoveryCases: 0,
     deathCases: 0,
     currentCase: {},
+    currentCaseHistory: {},
     addresses: []
 }
 
@@ -33,6 +35,8 @@ const userReducer = (state = initialState, action) => {
             return { ...state, currentCase: action.payload }
         case SET_ADDRESSES:
             return { ...state, addresses: action.payload }
+        case SET_CURRENT_CASE_HISTORY:
+            return { ...state, currentCaseHistory: action.payload }
         default:
             return state;
     }

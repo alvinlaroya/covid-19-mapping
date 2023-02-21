@@ -34,7 +34,7 @@ const DrawerContainer = () => {
         setActive(item);
         break;
       case "4":
-        navigation.navigate("CaseHistory");
+        navigation.navigate("Addresses");
         setActive(item);
         break;
       default:
