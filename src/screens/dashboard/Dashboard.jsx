@@ -7,9 +7,13 @@ import {
   setRecentCases,
   setCountCases,
   setAddresses,
+  setLocation,
 } from "../../redux/actions";
 
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+
+// expo location
+import * as Location from "expo-location";
 
 // react navigation
 import { useNavigation } from "@react-navigation/native";
@@ -23,6 +27,9 @@ import {
   where,
   onSnapshot,
   getDocs,
+  orderBy,
+  startAt,
+  endAt,
 } from "firebase/firestore";
 import { db } from "../../_common/services/database";
 
@@ -58,8 +65,35 @@ const App = () => {
     authObserve();
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      dispatch(
+        setLocation({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        })
+      );
+    })();
+  }, []);
+
   const getRecentCases = () => {
-    const q = query(collection(db, "cases"), where("isRecentCase", "==", true));
+    // Remove startAt and endAt
+    const startDate = new Date("2023-02-01");
+    const endDate = new Date("2023-02-28");
+    const q = query(
+      collection(db, "cases"),
+      where("isRecentCase", "==", true),
+      orderBy("createdAt"),
+      startAt(startDate),
+      endAt(endDate)
+    );
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       let cases = [];
       var newCases = 0;

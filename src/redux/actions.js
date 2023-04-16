@@ -4,6 +4,7 @@ export const SET_COUNT_CASES = "SET_COUNT_CASES";
 export const SET_CURRENT_CASE = "SET_CURRENT_CASE";
 export const SET_ADDRESSES = "SET_ADDRESSES";
 export const SET_CURRENT_CASE_HISTORY = "SET_CURRENT_CASE_HISTORY";
+export const SET_LOCATION = "SET_LOCATION";
 
 export const setUserSession = (user) => dispatch => {
     dispatch({
@@ -43,6 +44,13 @@ export const setAddresses = (data) => dispatch => {
 export const setCurrentCaseHistory = (data) => dispatch => {
     dispatch({
         type: SET_CURRENT_CASE_HISTORY,
+        payload: data
+    })
+}
+
+export const setLocation = (data) => dispatch => {
+    dispatch({
+        type: SET_LOCATION,
         payload: data
     })
 }

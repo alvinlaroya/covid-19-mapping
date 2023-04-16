@@ -6,6 +6,9 @@ import { useSelector } from "react-redux";
 
 const CaseTodayTable = () => {
   const { cases } = useSelector((state) => state.userReducer);
+  cases.sort((a, b) => {
+    return b.totalCase - a.totalCase;
+  });
   return (
     <DataTable>
       <DataTable.Header>

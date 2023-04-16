@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
 // react navigation
 import { useNavigation } from "@react-navigation/native";
+
+// momentt
+import moment from "moment";
 
 // redux
 import { useSelector } from "react-redux";
@@ -18,12 +21,13 @@ import AuthButton from "../../components/button/AuthButton";
 const App = () => {
   const navigation = useNavigation();
 
-  const { cases } = useSelector((state) => state.userReducer);
+  const { cases, location } = useSelector((state) => state.userReducer);
 
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [caseDetail, setCaseDetail] = useState({});
 
   const showModal = (data) => {
+    console.log(data.createdAt.seconds);
     setShowDetailModal(true);
     setCaseDetail(data);
   };
@@ -40,7 +44,7 @@ const App = () => {
           }}
         />
         <Appbar.Content
-          title="Map Case Locations"
+          title={`Map Case Location`}
           titleStyle={{
             color: "black",
             fontSize: 14,
@@ -65,6 +69,12 @@ const App = () => {
               />
             </View>
             <Text style={styles.caseDetail}>
+              Date:{" "}
+              {moment(caseDetail?.createdAt?.seconds * 1000).format(
+                "MMMM Do YYYY, h:mm:ss a"
+              )}
+            </Text>
+            <Text style={styles.caseDetail}>
               Barangay: {caseDetail.barangay}
             </Text>
             <Text style={styles.caseDetail}>New Cases: {caseDetail.new}</Text>
@@ -77,12 +87,29 @@ const App = () => {
         <MapView
           provider={PROVIDER_GOOGLE}
           style={styles.map}
-          initialRegion={{
-            latitude: 16.3247,
-            longitude: 120.3551,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
+          region={
+            location.latitude !== null && location.longitude !== null
+              ? {
+                  latitude: location.latitude,
+                  longitude: location.longitude,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+                }
+              : {
+                  latitude: 37.78825,
+                  longitude: -122.4324,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+                }
+          }
+          showsUserLocation={true}
+          showsBuildings={true}
+          showsTraffic={true}
+          showsIndoors={true}
+          rotateEnabled={true}
+          loadingEnabled={true}
+          showsMyLocationButton={true}
+          showsCompass={true}
         >
           {cases.map((data, i) => (
             <Marker

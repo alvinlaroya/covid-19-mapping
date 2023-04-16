@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 //redux
 import { useDispatch } from "react-redux";
@@ -6,7 +6,7 @@ import { setUserSession } from "../../redux/actions";
 
 // firestore
 import { auth } from "../../_common/services/database";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
 import { StatusBar } from "expo-status-bar";
 import {
@@ -20,7 +20,6 @@ import {
 } from "react-native";
 
 import { Button } from "react-native-paper";
-import "firebase/auth";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 /* var background = require('./assets/citybackground.jpg'); */
@@ -33,6 +32,24 @@ const SignInScreen = ({ props, navigation }) => {
   const [password, setPassword] = useState("");
   const [buttonLoading, setButtonLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  useEffect(() => {
+    const authObserve = () => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          //const uid = user.uid;
+          console.log(user);
+          dispatch(setUserSession(user));
+          navigation.navigate("Dashboard");
+        } else {
+          dispatch(setUserSession({}));
+          navigation.navigate("SignIn");
+        }
+      });
+    };
+
+    authObserve();
+  }, []);
 
   const signinUser = (emailVal, passwordVal) => {
     setButtonLoading(true);
@@ -130,12 +147,12 @@ const SignInScreen = ({ props, navigation }) => {
         >
           BACK TO DASHBOARD
         </Button>
-        <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+        {/* <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
           <Text style={styles.appButtonTextSignUp}>
             Don't have an account?{" "}
             <Text style={{ color: "#c90632" }}>Sign Up</Text>
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );
